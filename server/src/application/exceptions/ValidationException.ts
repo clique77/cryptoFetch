@@ -1,4 +1,4 @@
-import { ApplicationException } from "./ApplicationExcpetion";
+import { ApplicationException } from "./ApplicationException";
 
 export class ValidationException extends ApplicationException {
   public readonly field: string;

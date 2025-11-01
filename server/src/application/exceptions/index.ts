@@ -1,4 +1,4 @@
-export { ApplicationException } from './ApplicationExcpetion';
+export { ApplicationException } from './ApplicationException';
 export { ValidationException } from './ValidationException';
 export { EmailValidationException } from './dto/EmailValidationException';
 export { PasswordValidationException } from './dto/PasswordValidationException';

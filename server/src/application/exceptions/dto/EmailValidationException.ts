@@ -6,11 +6,11 @@ export class EmailValidationException extends ValidationException {
   }
 
   public static required(): EmailValidationException {
-    return new EmailValidationException('Email is requiered');
+    return new EmailValidationException('Email is required');
   }
 
   public static invalidType(): EmailValidationException {
-    return new EmailValidationException(`Invalid email be a string`);
+    return new EmailValidationException(`Invalid email must be a string`);
   }
 
   public static empty(): EmailValidationException {
