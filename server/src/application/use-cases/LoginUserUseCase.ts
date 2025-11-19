@@ -19,7 +19,7 @@ export class LoginUserUseCase {
   }
 
   public async execute(dto: LoginUserDTO): Promise<AuthResponseDTO> {
-    const user: User = await this.userRepository.findByEmail(dto.email);
+    const user: User | null = await this.userRepository.findByEmail(dto.email);
     if (!user) {
       throw new InvalidCredentialsException();
     }
@@ -29,9 +29,9 @@ export class LoginUserUseCase {
       throw new InvalidCredentialsException();
     }
 
-    const token = this.tokenGenerator.generate(user.id);
+    const token: string = this.tokenGenerator.generate(user.id);
 
-    const userResponse = new UserResponseDTO(
+    const userResponse: UserResponseDTO = new UserResponseDTO(
       user.id,
       user.getEmail(),
       user.getAccountName(),

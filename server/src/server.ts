@@ -1,5 +1,7 @@
 import Fastify from 'fastify';
 import type { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
+import { setupErrorHandler } from './presentation/middleware/errorHandler';
+import { registerAuthRoutes } from './presentation/routes/authRoutes';
 
 class Server {
   private fastify: FastifyInstance;
@@ -10,6 +12,7 @@ class Server {
     this.fastify = Fastify({ logger: true });
     this.port = port;
     this.host = host;
+    this.setupErrorHandler();
     this.setupRoutes();
   }
 
@@ -28,10 +31,18 @@ class Server {
     console.log('Server stopped');
   }
 
+  private setupErrorHandler(): void {
+    setupErrorHandler(this.fastify);
+  }
+
   private setupRoutes(): void {
     this.fastify.get('/', async (_request: FastifyRequest, _reply: FastifyReply) => {
-      return { message: 'Привет' };
-    })
+      return { message: 'CryptoFetch API is running' };
+    });
+
+    this.fastify.register(async (fastify) => {
+      await registerAuthRoutes(fastify);
+    }, { prefix: '/auth' });
   }
 }
 
