@@ -2,6 +2,7 @@ import Fastify from 'fastify';
 import type { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
 import { setupErrorHandler } from './presentation/middleware/errorHandler';
 import { registerAuthRoutes } from './presentation/routes/authRoutes';
+import cors from '@fastify/cors';
 
 class Server {
   private fastify: FastifyInstance;
@@ -12,6 +13,8 @@ class Server {
     this.fastify = Fastify({ logger: true });
     this.port = port;
     this.host = host;
+
+    this.setupCORS();
     this.setupErrorHandler();
     this.setupRoutes();
   }
@@ -43,6 +46,13 @@ class Server {
     this.fastify.register(async (fastify) => {
       await registerAuthRoutes(fastify);
     }, { prefix: '/auth' });
+  }
+
+  private async setupCORS(): Promise<void> {
+    await this.fastify.register(cors, {
+      origin: true,
+      credentials: true,
+    })
   }
 }
 
