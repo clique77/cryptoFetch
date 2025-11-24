@@ -10,11 +10,11 @@ export class EmailValidationException extends ValidationException {
   }
 
   public static invalidType(): EmailValidationException {
-    return new EmailValidationException(`Invalid email must be a string`);
+    return new EmailValidationException(`Please enter a valid email address`);
   }
 
   public static empty(): EmailValidationException {
-    return new EmailValidationException(`Email cannot be empty`);
+    return new EmailValidationException(`Email is required`);
   }
 
   public static tooLong(maxLength: number): EmailValidationException {

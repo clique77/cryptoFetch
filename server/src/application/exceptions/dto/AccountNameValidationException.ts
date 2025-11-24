@@ -10,11 +10,11 @@ export class AccountNameValidationException extends ValidationException {
   }
 
   static invalidType(): AccountNameValidationException {
-    return new AccountNameValidationException('Account name must be a string');
+    return new AccountNameValidationException('Account name is required');
   }
 
   static empty(): AccountNameValidationException {
-    return new AccountNameValidationException('Account name cannot be empty');
+    return new AccountNameValidationException('Account name is required');
   }
 
   static tooLong(maxLength: number): AccountNameValidationException {

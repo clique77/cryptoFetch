@@ -10,11 +10,11 @@ export class PasswordValidationException extends ValidationException {
   }
 
   static invalidType(): PasswordValidationException {
-    return new PasswordValidationException('Password must be a string');
+    return new PasswordValidationException('Password is required');
   }
 
   static empty(): PasswordValidationException {
-    return new PasswordValidationException('Password cannot be empty');
+    return new PasswordValidationException('Password is required');
   }
 
   static tooShort(minLength: number): PasswordValidationException {

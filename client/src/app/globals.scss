@@ -1,9 +1,18 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  body {
-    font-family: system-ui, -apple-system, sans-serif;
-  }
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  font-family: system-ui, -apple-system, sans-serif;
+  background: #0a0a0a;
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(156, 39, 176, 0.15) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(156, 39, 176, 0.1) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(123, 31, 162, 0.15) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, rgba(74, 20, 140, 0.1) 0px, transparent 50%);
+  background-attachment: fixed;
+  color: #ffffff;
+}

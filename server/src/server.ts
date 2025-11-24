@@ -9,18 +9,18 @@ class Server {
   private readonly port: number;
   private readonly host: string;
 
-  constructor(port: number = 3000, host: string = '0.0.0.0') {
+  constructor(port: number = 5731, host: string = '0.0.0.0') {
     this.fastify = Fastify({ logger: true });
     this.port = port;
     this.host = host;
 
-    this.setupCORS();
     this.setupErrorHandler();
     this.setupRoutes();
   }
 
   public async start(): Promise<void> {
     try {
+      await this.setupCORS();
       await this.fastify.listen({ port: this.port, host: this.host });
       console.log(`Server is running on port ${this.port}`);
     } catch (error) {
@@ -52,7 +52,9 @@ class Server {
     await this.fastify.register(cors, {
       origin: true,
       credentials: true,
-    })
+      methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+      allowedHeaders: ['Content-Type', 'Authorization'],
+    });
   }
 }
 

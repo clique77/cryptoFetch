@@ -6,7 +6,7 @@ export class RegisterUserDTO {
   public readonly accountName: string;
 
   constructor(email: string, password: string, accountName: string) {
-    if (!email || typeof email !== 'string') {
+    if (typeof email !== 'string') {
       throw EmailValidationException.invalidType();
     }
 
@@ -19,17 +19,22 @@ export class RegisterUserDTO {
       throw EmailValidationException.tooLong(254);
     }
 
-    if (!password || typeof password !== 'string') {
+    if (typeof password !== 'string') {
       throw PasswordValidationException.invalidType();  
+    }
+
+    if (password === '') {
+      throw PasswordValidationException.empty();
     }
 
     if (password.length < 8) {
       throw PasswordValidationException.tooShort(8);
     }
 
-    if (!accountName || typeof accountName !== 'string') {
+    if (typeof accountName !== 'string') {
       throw AccountNameValidationException.invalidType();
     }
+    
     const trimmedAccountName = accountName.trim();
     if (trimmedAccountName === '') {
       throw AccountNameValidationException.empty();
