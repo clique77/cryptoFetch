@@ -136,16 +136,17 @@ export class LocalStorageWorker {
   
       try {
         let size = 0;
-        const keys = this.getAllKeys();
-        keys.forEach(key => {
-          const fullKey = this.getFullKey(key);
-          const value = localStorage.getItem(fullKey);
-          if (value) {
-            const keyBlob = new Blob([fullKey]);
-            const valubeBlob = new Blob([value]);
-            size += keyBlob.size + valubeBlob.size;
+        for (let i = 0; i < localStorage.length; i++) {
+          const fullKey = localStorage.key(i);
+          if (fullKey && fullKey.startsWith(this.PREFIX)) {
+            const value = localStorage.getItem(fullKey);
+            if (value) {
+              const keyBlob = new Blob([fullKey]);
+              const valueBlob = new Blob([value]);
+              size += keyBlob.size + valueBlob.size;
+            }
           }
-        })
+        }
         return size;
       } catch (error) {
         console.error('Error calculating localStorage size:', error);
