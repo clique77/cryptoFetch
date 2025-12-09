@@ -1,8 +1,8 @@
 import '@/app/globals.scss'
 import type { Metadata } from 'next'
-import { ThemeProvider } from '@/provider/ThemeProvider'
+import { Providers } from '@/provider/Providers'
 import { ThemeToggle } from '@/components/theme/ThemeToggle'
-import { ThemeContextProvider } from '@/provider/ThemeContext'
+import { AuthInitializer } from '@/components/auth/AuthInitializer'
 
 export const metadata: Metadata = {
   title: 'CryptoFetch',
@@ -13,12 +13,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body>
-        <ThemeContextProvider>
-          <ThemeProvider>
-            <ThemeToggle />
-              {children}
-            </ThemeProvider>
-        </ThemeContextProvider>
+        <Providers>
+          <AuthInitializer />
+          <ThemeToggle />
+          {children}
+        </Providers>
       </body>
     </html>
   )

@@ -1,22 +1,22 @@
-interface RegisterRequest {
+export interface RegisterRequest {
   email: string;
   password: string;
   accountName: string;
 }
 
-interface LoginRequest {
+export interface LoginRequest {
   email: string;
   password: string;
 }
 
-interface UserResponse {
+export interface UserResponse {
   id: string;
   email: string;
   accountName: string;
   createdAt: string;
 }
 
-interface AuthResponse {
+export interface AuthResponse {
   token: string;
   user: UserResponse;
 }

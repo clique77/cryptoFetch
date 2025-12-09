@@ -133,7 +133,7 @@ export class LocalStorageWorker {
       if (!this.isAvailable()) {
         return 0;
       }
-  
+
       try {
         let size = 0;
         for (let i = 0; i < localStorage.length; i++) {

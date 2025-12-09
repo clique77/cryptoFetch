@@ -1,12 +1,12 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { apiClient } from '@/lib/api';
-import { ApiException } from '@/lib/api';
-import { LocalStorageWorker } from '@/lib/localStorageWorker';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { registerUser } from '@/store/features/auth/authThunks';
+import { clearError } from '@/store/features/auth/authSlice';
 import { 
   TextField,      
   Button, 
@@ -22,39 +22,34 @@ const RegisterForm = () => {
   const [email, setEmail] = useState<string>('');
   const [accountName, setAccountName] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const [error, setError] = useState<string>('');
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
+  const dispatch = useAppDispatch();
+  const { isLoading, error, user, token } = useAppSelector((state) => state.auth);
+
+  useEffect(() => {
+    if (user && token) {
+      router.push('/login');
+    }
+  }, [user, token, router]);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setError('');
-    
+    dispatch(clearError());
+
     if (!email.trim() || !accountName.trim() || !password.trim()) {
-      setError('Please fill in all fields');
       return;
     }
 
-    try {
-      setIsLoading(true);
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      const response = await apiClient.register({ email, password, accountName });
-      LocalStorageWorker.setItem('token', response.token);
-      LocalStorageWorker.setItem('user', response.user);
-      router.push('/login');
-    } catch (error) {
-      if (error instanceof ApiException || error instanceof Error) {
-        setError(error.message);
-      } else {
-        setError('An unexpected error occurred');
-      }
-    } finally {
-      setIsLoading(false);
-    }
+    await dispatch(registerUser({
+      email,
+      password,
+      accountName,
+    }));
   }
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
+    if (error) dispatch(clearError());
 
     switch (name) {
       case 'email':
@@ -91,7 +86,7 @@ const RegisterForm = () => {
               exit={{ opacity: 0, scale: 0.95, y: -10 }}
               transition={{ type: 'spring', stiffness: 500, damping: 30 }}
             >
-              <Alert severity="error" onClose={() => setError('')} sx={formStyles.alert}>
+              <Alert severity="error" sx={formStyles.alert} onClose={() => dispatch(clearError())}>
                 {error}
               </Alert>
             </motion.div>

@@ -11,6 +11,8 @@ export class RegisterUserUseCase {
   private userRepository: IUserRepository;
   private passwordHasher: IPasswordHasher;
   private tokenGenerator: ITokengenerator;
+  
+  //TODO: разобраться
 
   constructor(userRepository: IUserRepository, passwordHasher: IPasswordHasher, tokenGenerator: ITokengenerator) {
     this.userRepository = userRepository;
