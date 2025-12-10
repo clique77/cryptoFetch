@@ -138,18 +138,37 @@ export const formStyles = {
     paddingLeft: '2rem',
   },
 
-  image: {
-    width: '100%',
-    maxWidth: '400px',
-    height: 'auto',
-    opacity: 0.9,
-  },
-
   circularProgress: {
     color: (theme: Theme) => 
       theme.palette.mode === 'dark' ? '#ffffff' : '#000000',
     '& .MuiCircularProgress-circle': {
       strokeLinecap: 'round',
+    },
+  } as SxProps<Theme>,
+
+  linkContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 1,
+    mt: 2,
+  } as SxProps<Theme>,
+
+  linkText: {
+    color: (theme: Theme) => 
+      theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.6)',
+    fontSize: '0.95rem',
+  } as SxProps<Theme>,
+
+  link: {
+    color: '#9c27b0',
+    fontWeight: 600,
+    textDecoration: 'none',
+    fontSize: '0.95rem',
+    transition: 'all 0.2s ease',
+    '&:hover': {
+      color: '#ba68c8',
+      textDecoration: 'underline',
     },
   } as SxProps<Theme>,
 };

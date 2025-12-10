@@ -1,9 +1,10 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Image from 'next/image';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
+import Lottie from 'lottie-react';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { registerUser } from '@/store/features/auth/authThunks';
 import { clearError } from '@/store/features/auth/authSlice';
@@ -16,7 +17,7 @@ import {
   CircularProgress 
 } from '@mui/material';
 import { IMAGES } from '@/constants/images';
-import { formStyles } from './RegisterForm.module';
+import { formStyles } from '../AuthForms.module';
 
 const RegisterForm = () => {
   const [email, setEmail] = useState<string>('');
@@ -150,6 +151,17 @@ const RegisterForm = () => {
           )}
         </Button>
         </motion.div>
+
+        <Box sx={formStyles.linkContainer}>
+          <Typography sx={formStyles.linkText}>
+            Already have an account?
+          </Typography>
+          <Link href="/login" style={{ textDecoration: 'none' }}>
+            <Typography component="span" sx={formStyles.link}>
+              Sign In
+            </Typography>
+          </Link>
+        </Box>
         </Box>
         
         <motion.div
@@ -158,12 +170,11 @@ const RegisterForm = () => {
           transition={{ duration: 0.6, delay: 0.3, ease: [0.4, 0, 0.2, 1] }}
           style={formStyles.imageWrapper}
         >
-          <Image 
-            src={IMAGES.CRYPTO_ILLUSTRATION} 
-            alt="Crypto Illustration" 
-            width={400} 
-            height={400}
-            style={formStyles.image}
+          <Lottie 
+            animationData={IMAGES.CRYPTO_WALLET_ANIMATION}
+            style={{ width: '100%', maxWidth: '500px', height: 'auto' }}
+            loop={true}
+            autoplay={true}
           />
         </motion.div>
         </Box>

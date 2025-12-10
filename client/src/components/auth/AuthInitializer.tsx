@@ -14,7 +14,8 @@ export function AuthInitializer() {
     const user = LocalStorageWorker.getItem<UserResponse>('user');
 
     if (token && user) {
-      dispatch(restoreAuth({ user, token }));
+      //dispatch(restoreAuth({ user, token }));
+      // just for testing
     }
   }, [dispatch]);
 
